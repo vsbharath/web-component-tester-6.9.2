@@ -80,6 +80,8 @@ export async function prepare(context: Context): Promise<void> {
 
 export async function runTests(context: Context): Promise<void> {
   context.emit('log:debug', 'step: runTests');
+  let suites = context.options.suites;
+  context.emit('log:info', 'Running Suite: ' + suites[0]);
 
   const result = runBrowsers(context);
   const runners = result.runners;

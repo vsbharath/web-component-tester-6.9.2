@@ -287,6 +287,23 @@ function _deepMerge(target, source) {
 }
 
 /**
+ * @license
+ * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt The complete set of authors may be found
+ * at http://polymer.github.io/AUTHORS.txt The complete set of contributors may
+ * be found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by
+ * Google as part of the polymer project is also subject to an additional IP
+ * rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+/**
  * @param {function()} callback A function to call when the active web component
  *     frameworks have loaded.
  */
@@ -359,7 +376,7 @@ function debug() {
     if (!get('verbose')) {
         return;
     }
-    var args = [window.location.pathname].concat(var_args);
+    var args = __spreadArrays([window.location.pathname], var_args);
     (console.debug || console.log).apply(console, args);
 }
 // URL Processing
