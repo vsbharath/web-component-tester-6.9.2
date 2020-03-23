@@ -90,7 +90,7 @@ export class CliReporter {
     this.emitter = emitter;
     this.stream = stream;
     this.options = options;
-    var testEndEventExpectedNext = false;
+    let testEndEventExpectedNext = false;
     cleankill.onInterrupt(() => {
       return new Promise((resolve) => {
         this.flush();
