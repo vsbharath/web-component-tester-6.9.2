@@ -75,12 +75,10 @@ var CliReporter = /** @class */ (function () {
             _this.updateStatus();
         });
         emitter.on('browser-start', function (browser, data, stats) {
+            testEndEventExpectedNext = true;
             _this.browserStats[browser.id] = stats;
             _this.log(browser, 'Beginning tests via', chalk.magenta(data.url));
             _this.updateStatus();
-        });
-        emitter.on('test-start', function (browser, data, stats) {
-            testEndEventExpectedNext = true;
         });
         emitter.on('test-end', function (browser, data, stats) {
             testEndEventExpectedNext = false;
