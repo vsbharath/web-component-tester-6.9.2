@@ -90,6 +90,7 @@ export class CliReporter {
     this.emitter = emitter;
     this.stream = stream;
     this.options = options;
+    var testEndEventExpectedNext = false;
     cleankill.onInterrupt(() => {
       return new Promise((resolve) => {
         this.flush();
@@ -120,9 +121,15 @@ export class CliReporter {
           this.log(browser, 'Beginning tests via', chalk.magenta(data.url));
           this.updateStatus();
         });
-
+    emitter.on(
+        'test-start', 
+        (browser: BrowserDef, data: {url: string}, stats: Stats) => {
+          testEndEventExpectedNext = true;
+        });
+        
     emitter.on(
         'test-end', (browser: BrowserDef, data: TestEndData, stats: Stats) => {
+          testEndEventExpectedNext = false;
           this.browserStats[browser.id] = stats;
           if (data.state === 'failing') {
             this.writeTestError(browser, data);
@@ -140,11 +147,18 @@ export class CliReporter {
           if (error) {
             this.log(chalk.red, browser, 'Tests failed:', error);
           } else {
-            this.log(chalk.green, browser, 'Tests passed');
+            if (testEndEventExpectedNext) {
+              this.log(chalk.red, browser, 'A test setup failed!');
+            } else {
+              this.log(chalk.green, browser, 'Tests passed');
+            }
           }
         });
 
     emitter.on('run-end', (error: any) => {
+      if (testEndEventExpectedNext) {
+        error =  'A test setup failed!';
+      }
       if (error) {
         this.log(chalk.red, 'Test run ended in failure:', error);
       } else {
