@@ -150,7 +150,7 @@ var CliReporter = /** @class */ (function () {
                 status = counts.join('/');
             }
             if (stats.status === 'error') {
-                status = status + (status === '' ? '' : ' ') + chalk.red('error');
+                status = '1/0/1';
             }
             return padRight(pretty + ' (' + status + ')', STATUS_PAD);
         });
